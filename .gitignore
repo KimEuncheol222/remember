@@ -11,6 +11,7 @@ db.sqlite3
 db.sqlite3-journal
 media
 django_env/
+django_remember/
 blog_project\settings.
 
 # .env
