@@ -1,6 +1,8 @@
 from django.contrib import auth
-from django.shortcuts import render, redirect
-from .models import UserProfile
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import UserProfile, Post
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def login(request):
@@ -48,8 +50,16 @@ def main(request):
 def search(request):
     return render(request, 'carrot_app/search.html')
 
+# 동네인증 화면
+@login_required
 def location(request):
-    return render(request, 'carrot_app/location.html')
+    try:
+        user_profile = UserProfile.objects.get(user_id=request.user)
+        region = user_profile.region
+    except UserProfile.DoesNotExist:
+        region = None
+
+    return render(request, 'carrot_app/location.html', {'region': region})
 
 def trade(request):
     return render(request, 'carrot_app/trade.html')
@@ -57,8 +67,37 @@ def trade(request):
 def trade_post(request):
     return render(request, 'carrot_app/trade_post.html')
 
+# alert용 화면
+def alert(request, alert_message):
+    return render(request, 'carrot_app/alert.html', {'alert_message': alert_message})
+
+@login_required
 def write(request):
-    return render(request, 'carrot_app/write.html')
+    try:
+        user_profile = UserProfile.objects.get(user=request.user)
+        
+        if user_profile.region_certification == 'Y':
+            return render(request, 'carrot_app/write.html')
+        else:
+            return redirect('carrot_app:alert', alert_message='동네인증이 필요합니다.')
+    except UserProfile.DoesNotExist:
+        return redirect('carrot_app:alert', alert_message='동네인증이 필요합니다.')
+
+def edit(request, id):
+    post = get_object_or_404(Post, id=id)
+    if post:
+        post.description = post.description.strip()
+    if request.method == "POST":
+        post.title = request.POST['title']
+        post.price = request.POST['price']
+        post.description = request.POST['description']
+        post.location = request.POST['location']
+        if 'images' in request.FILES:
+            post.images = request.FILES['images']
+        post.save()
+        return redirect('carrot_app:trade_post', pk=id)
+
+    return render(request, 'carrot_app/write.html', {'post': post})
 
 def chat(request):
     return render(request, 'carrot_app/chat.html')
