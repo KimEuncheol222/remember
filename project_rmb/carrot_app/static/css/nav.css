@@ -14,7 +14,6 @@ nav {
 }
 
 .header-box {
-    width: 100%;
     display: flex;
     align-items: center;
 }
@@ -40,10 +39,12 @@ nav {
 }
 
 .ghost-button {
+    display: flex;
     font-size: 16px;
-    padding: 6px 18px;
+    padding: 12px 18px;
     text-decoration: none;
     border: 1px solid #d7d7d7;
+    border-radius: 5px;
 }
 
 .orange {
@@ -51,12 +52,32 @@ nav {
     border: 1px solid #fa6616;
 }
 
-input {
-    width: 219px;
+.input-container {
+    display: flex;
+    width: 260px;
     background-color: #f3f3f3;
-    padding: 6px 16px;
+    padding: 1px 1px;
     font-size: 16px;
     border: none;
+    outline: none;
+    border-radius: 5px;
+}
+
+input {
+    display: flex;
+    width: 80%;
+    padding: 11px 8px;
+    background-color: inherit;
+    border: none;
+    outline: none;
+}
+
+.clear-button {
+    display: flex;
+    align-items: center;
+    background-color: inherit;
+    border: none;
+    outline: none;
 }
 
 .orange-text {
@@ -68,9 +89,10 @@ input {
     input,
     .ghost-button,
     .nav-buttons,
+    .input-container,
     #trade-button,
     #location-button {
-        display: none; /* 모든 네비게이션 항목 숨기기 */
+        display: none;
     }
 
     .logo {
@@ -83,6 +105,7 @@ input {
     }
 
     .header-box {
+        width: 100%;
         display: flex;
         justify-content: space-between;
     }
