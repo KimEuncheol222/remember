@@ -1,5 +1,6 @@
 from django.contrib import auth
 from django.shortcuts import render, redirect
+from .models import UserProfile
 
 # Create your views here.
 def login(request):
@@ -32,7 +33,7 @@ def register(request):
             email = request.POST['email']
 
         try:
-            user = UserProfile.objects.create_user(username=username, email=email password=password)
+            user = UserProfile.objects.create_user(username=username, email=email, password=password)
             user.last_name = last_name
             user.first_name = first_name
             user.save()
