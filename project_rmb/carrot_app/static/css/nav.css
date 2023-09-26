@@ -13,6 +13,12 @@ nav {
     padding: 14px 0;
 }
 
+.header-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .logo {
     margin-right: 68px;
 }
@@ -20,6 +26,10 @@ nav {
 .nav-buttons {
     display: flex;
     gap: 20px;
+}
+
+.nav-icon-buttons {
+    display: none;
 }
 
 .nav-buttons a button {
@@ -51,4 +61,39 @@ input {
 
 .orange-text {
     color: #fa6616;
+}
+
+/* under 768px */
+@media screen and (max-width: 768px) {
+    input,
+    .ghost-button,
+    .nav-buttons,
+    #trade-button,
+    #location-button {
+        display: none; /* 모든 네비게이션 항목 숨기기 */
+    }
+
+    .logo {
+        display: flex;
+        margin-left: 18px;
+    }
+
+    .flex-box {
+        display: flex;
+    }
+
+    .header-box {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .nav-icon-buttons {
+        display: flex;
+        margin-right: 18px;
+    }
+
+    button {
+        border: none;
+        background-color: inherit;
+    }
 }
