@@ -58,12 +58,11 @@ class StandardArea(models.Model):
 # 사용자 프로필
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
-    region = models.CharField(max_length=100, null=True)
+    region = models.ForeignKey(StandardArea, on_delete=models.SET_NULL, null=True)
     region_certification = models.CharField(max_length=1, default='N')
+    certificated_at = models.DateTimeField(auto_now_add=True, null=True)
     join_date = models.DateTimeField(auto_now_add=True)
-    rating_score = models.DecimalField(max_digits=3, decimal_places=1)
-    area_id = models.ForeignKey(StandardArea)
-    certificated_at = models.DateTimeField(auto_now_add=True)
+    rating_score = models.DecimalField(max_digits=3, decimal_places=1, null=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
@@ -71,7 +70,7 @@ class UserProfile(models.Model):
 
 # 채팅 방
 class ChatRoom(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_room')
     product_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -81,7 +80,7 @@ class ChatRoom(models.Model):
 
 # 채팅 메시지
 class ChatMessage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_message')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
     chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     message = models.TextField()
@@ -91,6 +90,6 @@ class ChatMessage(models.Model):
 
 # 관심 상품
 class WishList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wish_list')
     product_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
