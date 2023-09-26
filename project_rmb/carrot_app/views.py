@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile, Post
 from django.contrib.auth.decorators import login_required
@@ -18,31 +19,24 @@ def login(request):
             return render(request, 'registration/login.html', {'error':'ID와 password를 확인해 주세요.'})
     return render(request, 'registration/login.html')
 
-def logout(request):
-    if request.method == 'POST':
-        auth.logout(request)
-        return redirect('login')
-    return render(request, 'carrot_app/login.html')
-
 def register(request):
-    if request.method == 'POST':
-        if request.POST['password'] == request.POST['pssword_confirm']:
-            username = request.POST['username']
-            password = request.POST['password']
-            password_confirm = request.POST['password_confirm']
-            first_name = request.POST['first_name']
-            last_name = request.POST['last_name']
-            email = request.POST['email']
+    error_message = None
 
-        try:
-            user = UserProfile.objects.create_user(username=username, email=email, password=password)
-            user.last_name = last_name
-            user.first_name = first_name
-            user.save()
-            return redirect('login')
-        except Exception:
-            return render(request, 'registration/register.html', {'signup_error':'password를 확인해 주세요.'})
-    return render(request, 'registration/register.html')
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        password_confirm = request.POST['password_confirm']
+
+        if password == password_confirm:
+            try:
+                user = User.objects.create_user(username=username, password=password)
+                return redirect('login')
+            except Exception:
+                error_message = '회원가입 중 오류가 발생했습니다.'
+        else:
+            error_message = '비밀번호와 비밀번호 확인이 일치하지 않습니다.'
+
+    return render(request, 'registration/register.html', {'error_message': error_message})
 
 def main(request):
     return render(request, 'carrot_app/main.html')
