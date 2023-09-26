@@ -5,6 +5,8 @@ from django.utils import timezone
 
 
 # Create your models here.
+
+# 게시글 작성
 class Post(models.Model):
 
     STATUS_CHOICES = (
@@ -23,7 +25,20 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True) 
     refreshed_at = models.DateTimeField() 
     view_num = models.PositiveIntegerField(default=0)  
-    chat_num = models.PositiveIntegerField(default=0)  
+    chat_num = models.PositiveIntegerField(default=0)
+    wish_num = models.PositiveIntegerField(default=0)    
+
+    def update_chat_count(self):
+        # 해당 포스트와 연관된 채팅방 개수 계산
+        chat_count = ChatRoom.objects.filter(product_id=self).count()
+        self.chat_num = chat_count
+        self.save()
+
+    def update_wish_count(self):
+        # 해당 포스트와 연관된 관심 수 계산
+        wish_count = WishList.objects.filter(product_id=self).count()
+        self.wish_num = wish_count
+        self.save()
 
     def __str__(self):
         return self.title
@@ -32,20 +47,49 @@ class Post(models.Model):
         ordering = ['-created_at']
 
 
+# 행정 지역
+class StandardArea(models.Model):
+    area_name = models.CharField(max_length=100)
+    city_id = models.IntegerField()
+    city_name = models.CharField(max_length=100)
+    version = models.DateTimeField(auto_now_add=True)
+
+
+# 사용자 프로필
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile')
-    is_staff = models.BooleanField(default=False)
-    region = models.CharField(max_length=100, null=True)
+    region = models.ForeignKey(StandardArea, on_delete=models.SET_NULL, null=True)
     region_certification = models.CharField(max_length=1, default='N')
+    certificated_at = models.DateTimeField(auto_now_add=True, null=True)
     join_date = models.DateTimeField(auto_now_add=True)
-    rating_score = models.DecimalField(max_digits=3, decimal_places=1)
+    rating_score = models.DecimalField(max_digits=3, decimal_places=1, null=True)
 
     def __str__(self):
         return f'{self.user.username} Profile'
-    
 
-class Chat(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
+
+# 채팅 방
+class ChatRoom(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_room')
+    product_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Chat Room ID: {self.id} for Product: {self.product_id.title}'
+
+
+# 채팅 메시지
+class ChatMessage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_message')
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
+    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+
+
+# 관심 상품
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wish_list')
+    product_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
