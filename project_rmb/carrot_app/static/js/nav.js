@@ -13,17 +13,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 버튼을 누를 때 마다 창의 활성화, 비활성화를 반복
 const searchButton = document.querySelector(".search-button");
-const searchContainer = document.querySelector(".search-container");
 const hamburgerButton = document.querySelector(".hamburger-button");
+const searchContainer = document.querySelector(".search-container");
 const hamburgerContainer = document.querySelector(".hamburger-container");
+const logo = document.querySelector(".logo");
+const searchExtend = document.querySelector(".search-extend");
 
 let isSearchContainerVisible = false;
 let isHamburgerContainerVisible = false;
+let isSearchExtendVisible = false;
 
 searchButton.addEventListener("click", function () {
     if (!isSearchContainerVisible) {
         searchContainer.style.display = "flex";
         isSearchContainerVisible = true;
+        logo.style.display = "none";
+        searchExtend.style.display = "block";
 
         if (isHamburgerContainerVisible) {
             hamburgerContainer.style.display = "none";
@@ -32,6 +37,8 @@ searchButton.addEventListener("click", function () {
     } else {
         searchContainer.style.display = "none";
         isSearchContainerVisible = false;
+        logo.style.display = "block";
+        searchExtend.style.display = "none";
     }
 });
 
@@ -43,6 +50,8 @@ hamburgerButton.addEventListener("click", function () {
         if (isSearchContainerVisible) {
             searchContainer.style.display = "none";
             isSearchContainerVisible = false;
+            logo.style.display = "block";
+            searchExtend.style.display = "none";
         }
     } else {
         hamburgerContainer.style.display = "none";

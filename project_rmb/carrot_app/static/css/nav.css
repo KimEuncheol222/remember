@@ -64,6 +64,10 @@ nav {
     border-radius: 5px;
 }
 
+.search-extend {
+    display: none;
+}
+
 input {
     display: flex;
     width: 80%;
@@ -111,6 +115,15 @@ input {
         justify-content: space-between;
     }
 
+    .search-extend {
+        display: none;
+        width: 80%;
+        padding: 11px 8px;
+        background-color: inherit;
+        border: none;
+        outline: none;
+    }
+
     .nav-icon-buttons {
         display: flex;
         margin-right: 18px;
@@ -119,9 +132,11 @@ input {
     .search-container,
     .hamburger-container {
         display: none;
+        flex-direction: column;
         width: 100%;
         height: 30%;
         border: 1px solid red;
+        color: red;
     }
 
     button {
