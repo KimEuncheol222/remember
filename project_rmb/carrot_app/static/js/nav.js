@@ -18,10 +18,12 @@ const searchContainer = document.querySelector(".search-container");
 const hamburgerContainer = document.querySelector(".hamburger-container");
 const logo = document.querySelector(".logo");
 const searchExtend = document.querySelector(".search-extend");
+const modalBackground = document.querySelector(".modal-background");
 
 let isSearchContainerVisible = false;
 let isHamburgerContainerVisible = false;
 let isSearchExtendVisible = false;
+let isModalBackgroundVisible = false;
 
 searchButton.addEventListener("click", function () {
     if (!isSearchContainerVisible) {
@@ -29,6 +31,7 @@ searchButton.addEventListener("click", function () {
         isSearchContainerVisible = true;
         logo.style.display = "none";
         searchExtend.style.display = "flex";
+        modalBackground.style.display = "flex";
 
         if (isHamburgerContainerVisible) {
             hamburgerContainer.style.display = "none";
@@ -39,6 +42,7 @@ searchButton.addEventListener("click", function () {
         isSearchContainerVisible = false;
         logo.style.display = "flex";
         searchExtend.style.display = "none";
+        modalBackground.style.display = "none";
     }
 });
 
@@ -46,15 +50,18 @@ hamburgerButton.addEventListener("click", function () {
     if (!isHamburgerContainerVisible) {
         hamburgerContainer.style.display = "flex";
         isHamburgerContainerVisible = true;
+        modalBackground.style.display = "flex";
 
         if (isSearchContainerVisible) {
             searchContainer.style.display = "none";
             isSearchContainerVisible = false;
             logo.style.display = "flex";
             searchExtend.style.display = "none";
+            modalBackground.style.display = "flex";
         }
     } else {
         hamburgerContainer.style.display = "none";
         isHamburgerContainerVisible = false;
+        modalBackground.style.display = "none";
     }
 });
