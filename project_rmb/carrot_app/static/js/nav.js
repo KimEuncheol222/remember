@@ -28,7 +28,7 @@ searchButton.addEventListener("click", function () {
         searchContainer.style.display = "flex";
         isSearchContainerVisible = true;
         logo.style.display = "none";
-        searchExtend.style.display = "block";
+        searchExtend.style.display = "flex";
 
         if (isHamburgerContainerVisible) {
             hamburgerContainer.style.display = "none";
@@ -37,7 +37,7 @@ searchButton.addEventListener("click", function () {
     } else {
         searchContainer.style.display = "none";
         isSearchContainerVisible = false;
-        logo.style.display = "block";
+        logo.style.display = "flex";
         searchExtend.style.display = "none";
     }
 });
@@ -50,7 +50,7 @@ hamburgerButton.addEventListener("click", function () {
         if (isSearchContainerVisible) {
             searchContainer.style.display = "none";
             isSearchContainerVisible = false;
-            logo.style.display = "block";
+            logo.style.display = "flex";
             searchExtend.style.display = "none";
         }
     } else {

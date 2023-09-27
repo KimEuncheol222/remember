@@ -117,11 +117,12 @@ input {
 
     .search-extend {
         display: none;
-        width: 80%;
+        width: 400px;
         padding: 11px 8px;
         background-color: inherit;
         border: none;
         outline: none;
+        color: grey;
     }
 
     .nav-icon-buttons {
