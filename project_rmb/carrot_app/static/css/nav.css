@@ -22,6 +22,10 @@ nav {
     margin-right: 68px;
 }
 
+.search-extend {
+    display: none;
+}
+
 .nav-buttons {
     display: flex;
     gap: 20px;
@@ -116,13 +120,12 @@ input {
     }
 
     .search-extend {
+        margin-left: 18px;
         display: none;
-        width: 400px;
         padding: 11px 8px;
-        background-color: inherit;
+        background-color: #f3f3f3;
         border: none;
         outline: none;
-        color: grey;
     }
 
     .nav-icon-buttons {
@@ -143,5 +146,20 @@ input {
     button {
         border: none;
         background-color: inherit;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    /* 모든 요소에 대해 display: none; 적용 */
+    .search-button,
+    .hamburger-button,
+    .search-container,
+    .hamburger-container,
+    .search-extend {
+        display: none !important;
+    }
+
+    .logo {
+        display: flex !important;
     }
 }
