@@ -9,17 +9,30 @@
                         <img src="{% static 'img/logo.png' %}" alt="" />
                     </a>
                 </div>
-                <input type="text" id="searchExtend" name="search-extend" class="search-extend" placeholder="물품이나 동네를 검색해보세요" />
+                <form method="GET" action="{% url 'search' %}">
+                    <input type="text" id="searchExtend" name="search-extend" class="search-extend" placeholder="물품이나 동네를 검색해보세요" />
+                </form>
+
+                {% comment %} 반응형 헤더 {% endcomment %}
+
                 <div class="nav-icon-buttons">
                     <button class="search-button" alt="search-button"><img src="{% static "img\search_button.svg" %}" alt="search_button"></button>
-                    <div class="search-container">
-                        <div>container test</div>
+                    <div id="searchContainer" class="search-container">
+                        <div><span>검색어1</span><span>검색어2</span></div>
+                        <div><span>검색어3</span><span>검색어4</span></div>
+                        <div><span>검색어5</span><span>검색어6</span></div>
                     </div>
                     <button class="hamburger-button" alt="hamburger-button"><img src="{% static "img\hamburger_button.svg" %}" alt="hamburger_button"></button>
-                    <div class="hamburger-container">
-                        <div>container test</div>
+                    <div id="hamburgerContainer" class="hamburger-container">
+                        <div>중고거래</div>
+                        <div>동네인증</div>
+                        <div>채팅하기</div>
+                        <div>로그아웃</div>
                     </div>
                 </div>
+
+                {% comment %} 반응형 헤더 {% endcomment %}
+
                 <div class="nav-buttons">
                     <a href="/trade">
                         <button id="trade-button">중고거래</button>

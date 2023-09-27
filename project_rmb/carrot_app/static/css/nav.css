@@ -119,8 +119,13 @@ input {
         justify-content: space-between;
     }
 
+    form {
+        width: 100%;
+    }
+
     .search-extend {
         margin-left: 18px;
+        width: 100%;
         display: none;
         padding: 11px 8px;
         background-color: #f3f3f3;
@@ -136,11 +141,17 @@ input {
     .search-container,
     .hamburger-container {
         display: none;
+        position: fixed;
         flex-direction: column;
+        top: 66px;
+        left: 0;
         width: 100%;
         height: 30%;
-        border: 1px solid red;
-        color: red;
+        background-color: #fff;
+        color: #000;
+        z-index: 0;
+        justify-content: center;
+        align-items: center;
     }
 
     button {
