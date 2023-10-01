@@ -93,6 +93,7 @@ def edit(request, id):
 
     return render(request, 'carrot_app/write.html', {'post': post})
 
+@login_required
 def chat(request):
     return render(request, 'carrot_app/chat.html')
 
