@@ -97,9 +97,9 @@ def write(request):
         if user_profile.region_certification == 'Y':
             return render(request, 'carrot_app/write.html')
         else:
-            return redirect('carrot_app:alert', alert_message='동네인증이 필요합니다.')
+            return redirect('alert', alert_message='동네인증이 필요합니다.')
     except UserProfile.DoesNotExist:
-        return redirect('carrot_app:alert', alert_message='동네인증이 필요합니다.')
+        return redirect('alert', alert_message='동네인증이 필요합니다.')
 
 def edit(request, id):
     post = get_object_or_404(Post, id=id)
