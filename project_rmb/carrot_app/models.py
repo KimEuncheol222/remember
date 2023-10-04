@@ -69,45 +69,40 @@ class UserProfile(models.Model):
     def __str__(self):
         return f'{self.user.username} Profile'
 
-
-# 채팅 방
-class ChatRoom(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_chat_room')
-    buyer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='buyer_chat_room', default=2)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    # 해당 채팅 방 user의 모든 상품 리스트 가져오기
-    def get_user_products(self):
-        return Post.objects.filter(user=self.user)
-
-    def __str__(self):
-        return f'ChatRoom ID: {self.user.id} with {self.buyer.id}'
-
-
-# 채팅 메시지
-class ChatMessage(models.Model):
-    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
-    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
-
-    def save(self, *args, **kwargs):
-        # 현재 로그인한 사용자 가져오기
-        current_user = self.sender
-
-        # 다른 사용자 가져오기 (chat_room의 buyer)
-        other_user = self.chat_room.buyer
-
-        # 현재 로그인한 사용자와 다른 사용자가 같지 않은 경우 buyer 필드 설정
-        if current_user != other_user:
-            self.sender = other_user
-
-        super().save(*args, **kwargs)
-
-
 # 관심 상품
 class WishList(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wish_list')
     product_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+# 채팅
+class ChatRoom(models.Model):
+    room_number = models.AutoField(primary_key=True)
+    starter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='started_chats')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_chats')
+    created_at = models.DateTimeField(auto_now_add=True)
+    latest_message_time = models.DateTimeField(null=True, blank=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='chat_rooms', null=True, blank=True)
+
+
+    def __str__(self):
+        return f'ChatRoom: {self.starter.username} and {self.receiver.username}'
+
+class Message(models.Model):
+    chatroom = models.ForeignKey(ChatRoom, on_delete=models.CASCADE, related_name='messages')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='authored_messages')
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Message: {self.author.username} at {self.timestamp}'
+
+    class Meta:
+        ordering = ['timestamp']
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        # 새 메시지가 저장될 때마다 chatroom의 latest_message_time을 업데이트
+        self.chatroom.latest_message_time = self.timestamp
+        self.chatroom.save()
