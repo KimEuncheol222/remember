@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile, Post
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 # Create your views here.
@@ -42,7 +43,13 @@ def main(request):
     return render(request, 'carrot_app/main.html')
 
 def search(request):
-    return render(request, 'carrot_app/search.html')
+    query = request.GET.get('search')
+    if query:
+        results = Post.objects.filter(Q(title__icontains=query) | Q(location__icontains=query))
+    else:
+        results = Post.objects.all()
+    
+    return render(request, 'carrot_app/search.html', {'posts': results})
 
 # 동네인증 화면
 @login_required
