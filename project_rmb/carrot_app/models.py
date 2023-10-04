@@ -50,7 +50,7 @@ class Post(models.Model):
 # 행정 지역
 class StandardArea(models.Model):
     area_name = models.CharField(max_length=100)
-    city_id = models.IntegerField()
+    city_id = models.IntegerField(null=True)
     city_name = models.CharField(max_length=100)
     version = models.DateTimeField(auto_now_add=True)
 
