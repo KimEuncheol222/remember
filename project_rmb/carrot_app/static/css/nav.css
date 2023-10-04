@@ -169,7 +169,7 @@ input {
         z-index: 998;
     }
 
-    .recent-word {
+    .recommend-word {
         font-weight: 700;
         line-height: 1.4;
         font-size: 16px;
@@ -182,6 +182,8 @@ input {
         background-color: inherit;
     }
 
+    /* 서치 컨테이너 */
+
     ul {
         list-style: none;
         padding: 0;
@@ -193,14 +195,30 @@ input {
     li {
         width: calc(47%);
         height: 52.59px;
-        display: flex;
-        align-items: center;
+        display: inline-block;
+        vertical-align: bottom;
         background-color: inherit;
         border-bottom: 1px solid #eaebee;
     }
 
+    li:hover {
+        cursor: pointer;
+    }
+
     li:nth-child(n + 5) {
         border-bottom: none;
+    }
+
+    /* 햄버거 컨테이너 */
+
+    a {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        text-decoration: none;
+        color: inherit;
+        align-items: center;
+        padding: inherit;
     }
 }
 
@@ -217,3 +235,5 @@ input {
         display: flex !important;
     }
 }
+
+/*  */
