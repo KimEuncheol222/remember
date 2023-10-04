@@ -55,11 +55,35 @@ def location(request):
 
     return render(request, 'carrot_app/location.html', {'region': region})
 
+# 중고거래 화면
 def trade(request):
-    return render(request, 'carrot_app/trade.html')
+    top_views_posts = Post.objects.filter(status='판매중').order_by('-view_num')
+    return render(request, 'carrot_app/trade.html', {'posts': top_views_posts})
 
-def trade_post(request):
-    return render(request, 'carrot_app/trade_post.html')
+# 중고거래상세정보(각 포스트) 화면
+def trade_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    # 조회수 증가
+    if request.user.is_authenticated:
+        if request.user != post.user:
+            post.view_num += 1
+            post.save()
+    else:
+        post.view_num += 1
+        post.save()
+
+    try:
+        user_profile = UserProfile.objects.get(user=post.user)
+    except UserProfile.DoesNotExist:
+            user_profile = None
+
+    context = {
+        'post': post,
+        'user_profile': user_profile
+    }
+
+    return render(request, 'carrot_app/trade_post.html', context)
 
 # alert용 화면
 def alert(request, alert_message):
