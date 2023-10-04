@@ -3,8 +3,9 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile, Post, StandardArea
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
+from .forms import PostForm
 
 
 # Create your views here.
@@ -132,35 +133,60 @@ def chat(request):
 def index(request):
     return render(request, 'carrot_app/index.html')
 
-def create_form(request):
-    return render(request, 'carrot_app/create_form.html')
+# 포스트 업로드
+@login_required
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)  # 임시 저장
+            post.user = request.user  # 작성자 정보 추가 (이 부분을 수정했습니다)
+            post.save()  # 최종 저장
+            return redirect('carrot_app:trade_post', pk=post.pk)  # 저장 후 상세 페이지로 이동
+    else:
+        form = PostForm()
+    return render(request, 'carrot_app/trade_post.html', {'form': form})
 
 # 지역설정
 @login_required
 def set_region(request):
     if request.method == "POST":
-        region_name = request.POST.get('region-setting')
+        region_full = request.POST.get('region-setting')  # 전체 지역명 입력값 가져오기
 
-        if region_name:
+        if region_full:
             try:
-                # StandardArea 모델에서 입력된 지역명에 해당하는 인스턴스를 가져옴
-                region_instance, created = StandardArea.objects.get_or_create(area_name=region_name)
+                # 공백을 기준으로 지역명과 시/도명을 분리
+                region_parts = region_full.split(' ')
+                
+                if len(region_parts) >= 2:
+                    city_name = region_parts[0]  # 첫 번째 단어를 city_name으로 저장
+                    area_name = ' '.join(region_parts[1:])  # 나머지 부분을 area_name으로 저장
 
-                # 현재 로그인한 사용자의 프로필을 가져오거나 생성
-                user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+                    # StandardArea 모델에서 입력된 지역명에 해당하는 인스턴스를 가져옴
+                    region_instance, created = StandardArea.objects.get_or_create(area_name=area_name)
 
-                # UserProfile의 region 필드에 해당 인스턴스를 할당
-                user_profile.region = region_instance
-                user_profile.region_certification = 'Y'  # 동네 인증 완료
-                user_profile.save()
+                    # city_name과 area_name을 할당
+                    region_instance.city_name = city_name
+                    region_instance.save()
 
-                return JsonResponse({"status": "success", "message": "동네 인증이 완료되었습니다."})
+                    # 현재 로그인한 사용자의 프로필을 가져오거나 생성
+                    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+                    # UserProfile의 region 필드에 해당 인스턴스를 할당
+                    user_profile.region = region_instance
+                    user_profile.region_certification = 'Y'  # 동네 인증 완료
+                    user_profile.save()
+
+                    return redirect('carrot_app:location')
+                else:
+                    return JsonResponse({"status": "error", "message": "올바른 형식으로 지역을 입력하세요."})
             except Exception as e:
                 return JsonResponse({"status": "error", "message": str(e)})
         else:
             return JsonResponse({"status": "error", "message": "지역을 입력하세요."})
     else:
-        return JsonResponse({"status": "error", "message": "Method not allowed"}, status=405)
+        # GET 요청의 경우 HttpResponse 객체 반환
+        return HttpResponse("GET request received. This view is for POST requests only.", status=405)
 
 # 지역인증 완료
 @login_required

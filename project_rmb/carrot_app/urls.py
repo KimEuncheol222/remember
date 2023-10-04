@@ -2,6 +2,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
 
+app_name = 'carrot_app'
+
 urlpatterns = [
     path('', views.main, name='main'),
     path('login/', views.login, name='login'),
@@ -18,5 +20,5 @@ urlpatterns = [
     path('edit/<int:id>/', views.edit, name='edit'),
     path('chat/', views.chat, name='chat'),
     path('index/', views.index, name='index'),
-    path('create_form/', views.create_form, name='create_form'),
+    path('create_form/', views.create_post, name='create_form'),
 ]
