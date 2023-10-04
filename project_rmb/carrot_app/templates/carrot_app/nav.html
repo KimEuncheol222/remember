@@ -5,11 +5,11 @@
         <div class="full-box flex-box between">
             <div class="header-box">
                 <div class="logo">
-                    <a href="{% url 'main' %}">
+                    <a href="{% url 'carrot_app:main' %}">
                         <img src="{% static 'img/logo.png' %}" alt="" />
                     </a>
                 </div>
-                <form method="GET" action="{% url 'search' %}">
+                <form method="GET" action="{% url 'carrot_app:search' %}">
                     <input type="text" id="searchExtend" name="search-extend" class="search-extend" placeholder="물품이나 동네를 검색해보세요" />
                 </form>
 
@@ -20,21 +20,21 @@
                     <div id="searchContainer" class="search-container">
                         <h1 class="recommend-word">추천</h1>
                         <ul id="recommendList">
-                            <li><a href="{% url 'search' %}?search=화분">화분</a></li>
-                            <li><a href="{% url 'search' %}?search=죽전 자전거">죽전 자전거</a></li>
-                            <li><a href="{% url 'search' %}?search=키즈카페">키즈카페</a></li>
-                            <li><a href="{% url 'search' %}?search=홍대 쇼파">홍대 쇼파</a></li>
-                            <li><a href="{% url 'search' %}?search=송파 자전거">송파 자전거</a></li>
-                            <li><a href="{% url 'search' %}?search=인천 마우스">인천 마우스</a></li>
+                            <li><a href="{% url 'carrot_app:search' %}?search=화분">화분</a></li>
+                            <li><a href="{% url 'carrot_app:search' %}?search=죽전 자전거">죽전 자전거</a></li>
+                            <li><a href="{% url 'carrot_app:search' %}?search=키즈카페">키즈카페</a></li>
+                            <li><a href="{% url 'carrot_app:search' %}?search=홍대 쇼파">홍대 쇼파</a></li>
+                            <li><a href="{% url 'carrot_app:search' %}?search=송파 자전거">송파 자전거</a></li>
+                            <li><a href="{% url 'carrot_app:search' %}?search=인천 마우스">인천 마우스</a></li>
                         </ul>
                     </div>
                     <button class="hamburger-button" alt="hamburger-button"><img src="{% static "img\hamburger_button.svg" %}" alt="hamburger_button"></button>
                     <div id="hamburgerContainer" class="hamburger-container">
-                        <a href="{% url 'trade' %}">중고거래</a>
-                        <a href="{% url 'location' %}">동네인증</a>
-                        <a href="{% url 'chat' %}">채팅하기</a>
-                        <a href="{% url 'logout' %}" class="logout-link" id="logout-link" data-authenticated="{{ user.is_authenticated }}">로그아웃</a>
-                        <a href="{% url 'login' %}" class="login-link" id="login-link" data-authenticated="{{ user.is_authenticated }}">로그인</a>
+                        <a href="{% url 'carrot_app:trade' %}">중고거래</a>
+                        <a href="{% url 'carrot_app:location' %}">동네인증</a>
+                        <a href="{% url 'carrot_app:chat' %}">채팅하기</a>
+                        <a href="{% url 'carrot_app:logout' %}" class="logout-link" id="logout-link" data-authenticated="{{ user.is_authenticated }}">로그아웃</a>
+                        <a href="{% url 'carrot_app:login' %}" class="login-link" id="login-link" data-authenticated="{{ user.is_authenticated }}">로그인</a>
                     </div>
                     <div class="modal-background"></div>
                 </div>
@@ -53,21 +53,21 @@
                 </div>
             </div>
             <div class="flex-box gap8">
-                <form method="GET" action="{% url 'search' %}">
+                <form method="GET" action="{% url 'carrot_app:search' %}">
                     <div class="input-container">
                         <input type="text" id="search" name="search" class="search" placeholder="물품이나 동네를 검색해보세요" />
                         <button class="clear-button"><img src="{% static "img\clear_button.svg" %}" alt="clear_button"></button>
                     </div>
                 </form>
                 {% if user.is_authenticated %}
-                <a href="{% url 'chat' %}" class="ghost-button orange">채팅하기</a>
-                <form action="{% url 'logout' %}" method="post">
+                <a href="{% url 'carrot_app:chat' %}" class="ghost-button orange">채팅하기</a>
+                <form action="{% url 'carrot_app:logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="ghost-button">로그아웃</button>
                 </form>
 
                 {% else %}
-                <a href="{% url 'login' %}" class="ghost-button" style="color: #1e1e1e">로그인</a>
+                <a href="{% url 'carrot_app:login' %}" class="ghost-button" style="color: #1e1e1e">로그인</a>
                 {% endif %}
             </div>
         </div>

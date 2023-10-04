@@ -2,6 +2,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 from . import views
 
+app_name = 'carrot_app'
+
 urlpatterns = [
     path('alert/<str:alert_message>/', views.alert, name='alert'),
 
@@ -9,11 +11,13 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     path('register/', views.register, name='register'),
+    path('set_region/', views.set_region, name='set_region'),
+    path('set_region_certification/', views.set_region_certification, name='set_region_certification'),
     path('trade/', views.trade, name='trade'),
     path('trade_post/<int:pk>/', views.trade_post, name='trade_post'),
     path('write/', views.write, name='write'),
     path('edit/<int:id>/', views.edit, name='edit'),
-    path('create_form/', views.create_form, name='create_form'),
+    path('create_form/', views.create_post, name='create_form'),
     path('location/', views.location, name='location'),
     path('search/', views.search, name='search'),
     path('chat/', views.chat, name='chat'),

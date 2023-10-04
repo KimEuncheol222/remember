@@ -23,7 +23,7 @@ class Post(models.Model):
     images = models.ImageField(upload_to='post_images/', null=True) 
     location = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True) 
-    refreshed_at = models.DateTimeField() 
+    refreshed_at = models.DateTimeField(default=timezone.now) 
     view_num = models.PositiveIntegerField(default=0)  
     chat_num = models.PositiveIntegerField(default=0)
     wish_num = models.PositiveIntegerField(default=0)    
