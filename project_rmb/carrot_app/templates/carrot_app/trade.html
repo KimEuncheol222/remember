@@ -46,6 +46,8 @@
                 <div class="card-img">
                   {% if post.images %}
                     <img src="{{ post.images.url }}" alt="{{ post.title }}">
+                  {% else %}
+                    <img src="{% static 'img/bbang2.png' %}" alt="{{ post.title }}">
                   {% endif %}
                 </div>
                 <div class="card-info-box">
