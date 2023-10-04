@@ -20,7 +20,11 @@
       <div class="container column">
         <div class="post-box">
           {% block content %}
-            <img src="{{ post.images.url }}" alt="{{ post.title }}" class="block-box">
+            {% if post.images %}
+                <img src="{{ post.images.url }}" alt="{{ post.title }}" class="block-box">
+            {% else %}
+                <img src="{% static 'img/character.png' %}" alt="Default Image" class="block-box">
+            {% endif %}
             <div class="flex-box between info-button-box">
               <div class="user-info">
                 <h6>{{ post.user }}</h6>
