@@ -1,8 +1,9 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import UserProfile, Post
+from .models import UserProfile, Post, StandardArea
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -102,3 +103,39 @@ def index(request):
 
 def create_form(request):
     return render(request, 'carrot_app/create_form.html')
+
+# 지역설정
+@login_required
+def set_region(request):
+    if request.method == "POST":
+        region_name = request.POST.get('region-setting')
+
+        if region_name:
+            try:
+                # StandardArea 모델에서 입력된 지역명에 해당하는 인스턴스를 가져옴
+                region_instance, created = StandardArea.objects.get_or_create(area_name=region_name)
+
+                # 현재 로그인한 사용자의 프로필을 가져오거나 생성
+                user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+                # UserProfile의 region 필드에 해당 인스턴스를 할당
+                user_profile.region = region_instance
+                user_profile.region_certification = 'Y'  # 동네 인증 완료
+                user_profile.save()
+
+                return JsonResponse({"status": "success", "message": "동네 인증이 완료되었습니다."})
+            except Exception as e:
+                return JsonResponse({"status": "error", "message": str(e)})
+        else:
+            return JsonResponse({"status": "error", "message": "지역을 입력하세요."})
+    else:
+        return JsonResponse({"status": "error", "message": "Method not allowed"}, status=405)
+
+# 지역인증 완료
+@login_required
+def set_region_certification(request):
+    if request.method == "POST":
+        request.user.profile.region_certification = 'Y'
+        request.user.profile.save()
+        messages.success(request, "인증되었습니다")
+        return redirect('carrot_app:location')
