@@ -42,7 +42,7 @@
     flex-direction: column;
 }
 
-button:hover {
+.login-container button:hover {
     background-color: #ff823f;
 }
 
@@ -56,4 +56,14 @@ button:hover {
     text-decoration: none;
     color: #ff823f;
     cursor: pointer;
+}
+
+/* under 768px */
+@media screen and (max-width: 768px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }
