@@ -75,19 +75,13 @@ def trade(request):
 def trade_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
-    # 조회수 증가
-    if request.user.is_authenticated:
-        if request.user != post.user:
-            post.view_num += 1
-            post.save()
-    else:
-        post.view_num += 1
-        post.save()
+    post.view_num += 1
+    post.save()
 
     try:
         user_profile = UserProfile.objects.get(user=post.user)
     except UserProfile.DoesNotExist:
-            user_profile = None
+        user_profile = None
 
     context = {
         'post': post,
@@ -95,6 +89,7 @@ def trade_post(request, pk):
     }
 
     return render(request, 'carrot_app/trade_post.html', context)
+
 
 # alert용 화면
 def alert(request, alert_message):
