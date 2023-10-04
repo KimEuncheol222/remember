@@ -9,7 +9,7 @@ urlpatterns = [
 
     path('', views.main, name='main'),
     path('login/', views.login, name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='carrot_app:login'), name='logout'),
     path('register/', views.register, name='register'),
     path('set_region/', views.set_region, name='set_region'),
     path('set_region_certification/', views.set_region_certification, name='set_region_certification'),
@@ -22,7 +22,7 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('chat/', views.chat, name='chat'),
 
-    # 채팅
+    # # 채팅
     # path("chat_index", views.index, name='index'),  
     # path('chat_index/<int:pk>/', views.chat_room, name='chat_room'),
     # path('create_or_join_chat/<int:pk>/', views.create_or_join_chat, name='create_or_join_chat'),
