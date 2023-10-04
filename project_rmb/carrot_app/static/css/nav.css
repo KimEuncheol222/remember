@@ -149,7 +149,7 @@ input {
         top: 66px;
         left: 0;
         width: 100%;
-        height: 24%;
+        height: 230px;
         background-color: #fff;
         color: #000;
         z-index: 999;
@@ -187,6 +187,7 @@ input {
     /* 서치 컨테이너 */
 
     ul {
+        height: 100%;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -237,5 +238,3 @@ input {
         display: flex !important;
     }
 }
-
-/*  */
