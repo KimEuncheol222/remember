@@ -223,6 +223,12 @@ input {
         align-items: center;
         padding: inherit;
     }
+
+    .recommend-word,
+    .search-container a,
+    .hamburger-container a {
+        animation: fallingAnimation 0.2s ease-in-out;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -236,5 +242,28 @@ input {
 
     .logo {
         display: flex !important;
+    }
+}
+
+@keyframes fallingAnimation {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    25% {
+        transform: translateY(-10px);
+        opacity: 0.2;
+    }
+    50% {
+        transform: translateY(-5px);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translateY(-2px);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
     }
 }
