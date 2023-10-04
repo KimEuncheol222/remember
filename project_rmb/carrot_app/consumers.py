@@ -1,8 +1,8 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 from .models import ChatRoom, ChatMessage
-from channels.db import database_sync_to_async
 from asgiref.sync import async_to_sync
 
 User = get_user_model()
@@ -68,7 +68,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "username": username
         }))
 
-    @database_sync_to_async
     async def load_previous_messages(self):
         chat_room = ChatRoom.objects.get(id=self.room_name)
         messages = ChatMessage.objects.filter(chat_room=chat_room)
