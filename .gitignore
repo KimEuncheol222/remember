@@ -9,7 +9,7 @@ __pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-media
+# media
 django_env/
 django_remember/
 blog_project\settings.
