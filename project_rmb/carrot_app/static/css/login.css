@@ -1,5 +1,6 @@
 .login-container {
-    width: 440px;
+    width: 100%;
+    max-width: 440px;
     min-height: 100dvh;
     display: flex;
     justify-content: center;
@@ -8,11 +9,14 @@
 }
 
 .login-input {
-    width: -webkit-fill-available;
+    width: 100%;
     background-color: #fff;
     border: 1px solid #fa6616;
     border-radius: 100px;
     padding: 13px;
+    max-width: none; /* 최대 너비 해제 */
+    box-sizing: border-box; /* 패딩과 테두리 포함한 전체 너비 사용 */
+    display: block;
 }
 
 .login-form {
@@ -42,7 +46,7 @@
     flex-direction: column;
 }
 
-button:hover {
+.login-container button:hover {
     background-color: #ff823f;
 }
 
@@ -56,4 +60,37 @@ button:hover {
     text-decoration: none;
     color: #ff823f;
     cursor: pointer;
+}
+
+/* under 768px */
+
+@media screen and (max-width: 768px) {
+    body {
+        overflow: hidden;
+    }
+
+    /* absolute */
+    .login-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0 20px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .login-form {
+        width: 100%;
+        max-width: none;
+    }
+
+    .login-input {
+        width: 100%;
+        max-width: none;
+    }
+
+    .register-reco a {
+        display: block;
+    }
 }
