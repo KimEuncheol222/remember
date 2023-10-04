@@ -6,11 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// var buttonClear = document.querySelector(".button-clear");
-// buttonClear.addEventListener("click", function () {
-//     buttonClear.parentNode.querySelector("input").value = "";
-// });
-
 // 버튼을 누를 때 마다 창의 활성화, 비활성화를 반복
 const searchButton = document.querySelector(".search-button");
 const hamburgerButton = document.querySelector(".hamburger-button");
@@ -63,5 +58,22 @@ hamburgerButton.addEventListener("click", function () {
         hamburgerContainer.style.display = "none";
         isHamburgerContainerVisible = false;
         modalBackground.style.display = "none";
+    }
+});
+
+// 로그아웃과 로그인 표시
+
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutLink = document.getElementById("logout-link");
+    const loginLink = document.getElementById("login-link");
+
+    const isAuthenticated = logoutLink.getAttribute("data-authenticated");
+
+    if (isAuthenticated === "True") {
+        loginLink.style.display = "none";
+        logoutLink.style.display = "flex";
+    } else {
+        loginLink.style.display = "flex";
+        logoutLink.style.display = "none";
     }
 });

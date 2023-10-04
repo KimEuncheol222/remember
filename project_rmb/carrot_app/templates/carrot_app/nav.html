@@ -18,22 +18,23 @@
                 <div class="nav-icon-buttons">
                     <button class="search-button" alt="search-button"><img src="{% static "img\search_button.svg" %}" alt="search_button"></button>
                     <div id="searchContainer" class="search-container">
-                        <h1 class="recent-word">최근 검색어</h1>
-                        <ul>
-                            <li>검색어1</li>
-                            <li>검색어2</li>
-                            <li>검색어3</li>
-                            <li>검색어4</li>
-                            <li>검색어5</li>
-                            <li>검색어6</li>
+                        <h1 class="recommend-word">추천</h1>
+                        <ul id="recommendList">
+                            <li><a href="{% url 'search' %}?search=화분">화분</a></li>
+                            <li><a href="{% url 'search' %}?search=죽전 자전거">죽전 자전거</a></li>
+                            <li><a href="{% url 'search' %}?search=키즈카페">키즈카페</a></li>
+                            <li><a href="{% url 'search' %}?search=홍대 쇼파">홍대 쇼파</a></li>
+                            <li><a href="{% url 'search' %}?search=송파 자전거">송파 자전거</a></li>
+                            <li><a href="{% url 'search' %}?search=인천 마우스">인천 마우스</a></li>
                         </ul>
                     </div>
                     <button class="hamburger-button" alt="hamburger-button"><img src="{% static "img\hamburger_button.svg" %}" alt="hamburger_button"></button>
                     <div id="hamburgerContainer" class="hamburger-container">
-                        <a>중고거래</a>
-                        <a>동네인증</a>
-                        <a>채팅하기</a>
-                        <a>로그아웃</a>
+                        <a href="{% url 'trade' %}">중고거래</a>
+                        <a href="{% url 'location' %}">동네인증</a>
+                        <a href="{% url 'chat' %}">채팅하기</a>
+                        <a href="{% url 'logout' %}" class="logout-link" id="logout-link" data-authenticated="{{ user.is_authenticated }}">로그아웃</a>
+                        <a href="{% url 'login' %}" class="login-link" id="login-link" data-authenticated="{{ user.is_authenticated }}">로그인</a>
                     </div>
                     <div class="modal-background"></div>
                 </div>
@@ -71,5 +72,6 @@
             </div>
         </div>
     </div>
+    s
     <script src="{% static 'js/nav.js' %}"></script>
 </nav>

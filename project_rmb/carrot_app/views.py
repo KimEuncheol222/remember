@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile, Post, StandardArea
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Q
 
 
 # Create your views here.
@@ -43,7 +44,13 @@ def main(request):
     return render(request, 'carrot_app/main.html')
 
 def search(request):
-    return render(request, 'carrot_app/search.html')
+    query = request.GET.get('search')
+    if query:
+        results = Post.objects.filter(Q(title__icontains=query) | Q(location__icontains=query))
+    else:
+        results = Post.objects.all()
+    
+    return render(request, 'carrot_app/search.html', {'posts': results})
 
 # 동네인증 화면
 @login_required
@@ -56,11 +63,35 @@ def location(request):
 
     return render(request, 'carrot_app/location.html', {'region': region})
 
+# 중고거래 화면
 def trade(request):
-    return render(request, 'carrot_app/trade.html')
+    top_views_posts = Post.objects.filter(status='판매중').order_by('-view_num')
+    return render(request, 'carrot_app/trade.html', {'posts': top_views_posts})
 
-def trade_post(request):
-    return render(request, 'carrot_app/trade_post.html')
+# 중고거래상세정보(각 포스트) 화면
+def trade_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    # 조회수 증가
+    if request.user.is_authenticated:
+        if request.user != post.user:
+            post.view_num += 1
+            post.save()
+    else:
+        post.view_num += 1
+        post.save()
+
+    try:
+        user_profile = UserProfile.objects.get(user=post.user)
+    except UserProfile.DoesNotExist:
+            user_profile = None
+
+    context = {
+        'post': post,
+        'user_profile': user_profile
+    }
+
+    return render(request, 'carrot_app/trade_post.html', context)
 
 # alert용 화면
 def alert(request, alert_message):
@@ -74,9 +105,9 @@ def write(request):
         if user_profile.region_certification == 'Y':
             return render(request, 'carrot_app/write.html')
         else:
-            return redirect('carrot_app:alert', alert_message='동네인증이 필요합니다.')
+            return redirect('alert', alert_message='동네인증이 필요합니다.')
     except UserProfile.DoesNotExist:
-        return redirect('carrot_app:alert', alert_message='동네인증이 필요합니다.')
+        return redirect('alert', alert_message='동네인증이 필요합니다.')
 
 def edit(request, id):
     post = get_object_or_404(Post, id=id)
