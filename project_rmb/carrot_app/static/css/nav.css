@@ -99,6 +99,8 @@ input {
     .ghost-button,
     .nav-buttons,
     .input-container,
+    .login-link,
+    .logout-link,
     #trade-button,
     #location-button {
         display: none;

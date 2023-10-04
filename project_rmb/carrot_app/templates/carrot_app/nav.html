@@ -30,10 +30,11 @@
                     </div>
                     <button class="hamburger-button" alt="hamburger-button"><img src="{% static "img\hamburger_button.svg" %}" alt="hamburger_button"></button>
                     <div id="hamburgerContainer" class="hamburger-container">
-                        <a>중고거래</a>
-                        <a>동네인증</a>
-                        <a>채팅하기</a>
-                        <a>로그아웃1</a>
+                        <a href="{% url 'trade' %}">중고거래</a>
+                        <a href="{% url 'location' %}">동네인증</a>
+                        <a href="{% url 'chat' %}">채팅하기</a>
+                        <a href="{% url 'logout' %}" class="logout-link" id="logout-link" data-authenticated="{{ user.is_authenticated }}">로그아웃</a>
+                        <a href="{% url 'login' %}" class="login-link" id="login-link" data-authenticated="{{ user.is_authenticated }}">로그인</a>
                     </div>
                     <div class="modal-background"></div>
                 </div>
@@ -71,5 +72,6 @@
             </div>
         </div>
     </div>
+    s
     <script src="{% static 'js/nav.js' %}"></script>
 </nav>

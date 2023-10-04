@@ -60,3 +60,20 @@ hamburgerButton.addEventListener("click", function () {
         modalBackground.style.display = "none";
     }
 });
+
+// 로그아웃과 로그인 표시
+
+document.addEventListener("DOMContentLoaded", function () {
+    const logoutLink = document.getElementById("logout-link");
+    const loginLink = document.getElementById("login-link");
+
+    const isAuthenticated = logoutLink.getAttribute("data-authenticated");
+
+    if (isAuthenticated === "True") {
+        loginLink.style.display = "none";
+        logoutLink.style.display = "flex";
+    } else {
+        loginLink.style.display = "flex";
+        logoutLink.style.display = "none";
+    }
+});
