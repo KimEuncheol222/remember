@@ -66,7 +66,7 @@
                 <a href="{% url 'carrot_app:get_latest_chat_no_pk' %}" class="ghost-button orange">채팅하기</a>
                 <form action="{% url 'carrot_app:logout' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="ghost-button">로그아웃</button>
+                    <button type="submit" class="ghost-button">{{user.username}}님 로그아웃</button>
                 </form>
 
                 {% else %}
