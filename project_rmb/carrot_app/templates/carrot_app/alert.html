@@ -8,7 +8,13 @@
   <body>
     <script type="text/javascript">
       alert('{{ alert_message }}');
-      window.location.href = '{% url "location" %}';
+      {% if redirect_url == "location" %}
+        window.location.href = '{% url "carrot_app:location" %}';
+      {% elif redirect_url == "main" %}
+        window.location.href = '{% url "carrot_app:main" %}';
+      {% else %}
+        window.history.back();
+      {% endif %}
     </script>
   </body>
 
