@@ -35,6 +35,12 @@
                   <a href="{% url 'carrot_app:edit' post.id %}">
                     <button class="grey">수정하기</button>
                   </a>
+                  <div class="delete-button-box">
+                    <form action="{% url 'carrot_app:delete_post' post.pk %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="grey">삭제하기</button>
+                    </form>
+                  </div>
                   <a href="{% url 'carrot_app:get_latest_chat' pk=post.pk %}">
                     <button class="orange">채팅보기</button>
                   </a>
@@ -66,14 +72,6 @@
                   {{ post.location }}</p>
                 <p>조회수
                   {{ post.view_num }}</p>
-              </div>
-              <div class="delete-button-box">
-                {% if request.user.username == post.user.username %}
-                    <form action="{% url 'carrot_app:delete_post' post.pk %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">삭제</button>
-                    </form>
-                {% endif %}
               </div>
             </div>
           {% endblock %}
