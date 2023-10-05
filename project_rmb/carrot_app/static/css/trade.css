@@ -63,7 +63,9 @@ body {
 
 h1 {
     margin: 112px 0;
+    display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .trade-info-section {
@@ -165,10 +167,29 @@ h1 {
 
 @media screen and (max-width: 768px) {
     body {
-        /* overflow-x: hidden; */
+        overflow-x: hidden;
+        width: 768px;
+        height: 100%;
+    }
+
+    h1 {
+        margin: 112px 0;
+        display: flex;
         width: 100%;
         height: 100%;
-        max-width: 768px;
+        text-align: center;
+        transform: translate(-17.6%, 0);
+    }
+
+    a {
+        transform: translate(-17.6%, 0);
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        padding-left: 10px;
     }
 
     .trade-text {
@@ -182,7 +203,7 @@ h1 {
     }
 
     .card-box {
-        display: block;
+        display: inline-block;
         flex: 0 0 calc(40% - 20px); /* 화면 폭이 768px 이하일 때: 열당 2개의 카드가 표시됨 */
         flex-direction: column;
     }
@@ -195,24 +216,37 @@ h1 {
     .card-info-box {
         max-width: 210px;
     }
-}
 
-@media screen and (max-width: 572px) {
-    body {
-        overflow-x: hidden;
-        width: 100%;
-        height: 100%;
-        max-width: 572px;
-    }
-    .card-box {
-        flex: 0 0 calc(100% - 20px); /* 화면 폭이 572px 이하일 때: 열당 1개의 카드가 표시됨 */
-        margin-right: 0; /* 오른쪽 여백 제거 */
-        margin-bottom: 20px; /* 아래 여백 추가 */
-        justify-content: center;
-    }
+    @media screen and (max-width: 572px) {
+        body {
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            max-width: 572px;
+        }
 
-    a {
-        display: flex;
-        flex-direction: column;
+        h1 {
+            margin: 112px 0;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transform: translate(-25%, 0);
+        }
+
+        .card-box {
+            flex: 0 0 calc(100% - 20px); /* 화면 폭이 572px 이하일 때: 열당 1개의 카드가 표시됨 */
+
+            margin-right: 0; /* 오른쪽 여백 제거 */
+            margin-bottom: 20px; /* 아래 여백 추가 */
+            justify-content: center;
+        }
+
+        a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translate(-25%, 0);
+        }
     }
 }
