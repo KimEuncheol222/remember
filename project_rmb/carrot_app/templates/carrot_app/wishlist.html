@@ -15,18 +15,18 @@
   <body>
     {% include 'carrot_app/nav.html' %}
     {% block content %}
-    <h1>나의 관심 목록</h1>
-    {% if wishlist %}
+    <h1>관심 목록</h1>
+    {% if wishlist_posts %}
       <ul>
-        {% for item in wishlist %}
+        {% for post in wishlist_posts %}
           <li>
-            <a href="{% url 'carrot_app:trade_post' item.product.pk %}">{{ item.product.title }}</a>
-            <a href="{% url 'carrot_app:add_to_wishlist' item.product.pk %}" class="remove-from-wishlist">좋아요 취소</a>
+            <a href="{% url 'carrot_app:trade_post' post.id %}">{{ post.title }}</a>
+            <!-- 원하는 게시물 정보 표시 -->
           </li>
         {% endfor %}
       </ul>
     {% else %}
-      <p>관심 목록이 비어 있습니다.</p>
+      <p>관심 목록에 아무 항목도 없습니다.</p>
     {% endif %}
   {% endblock %}
   {% include 'carrot_app/footer.html' %}

@@ -26,7 +26,8 @@ class Post(models.Model):
     refreshed_at = models.DateTimeField(default=timezone.now) 
     view_num = models.PositiveIntegerField(default=0)  
     chat_num = models.PositiveIntegerField(default=0)
-    wish_num = models.PositiveIntegerField(default=0)    
+    wish_num = models.PositiveIntegerField(default=0)
+    is_liked_by_user = models.BooleanField(default=False)  # 좋아요 상태를 나타내는 필드 추가    
 
     def update_chat_count(self):
         # 해당 포스트와 연관된 채팅방 개수 계산

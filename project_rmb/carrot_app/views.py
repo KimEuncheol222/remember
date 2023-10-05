@@ -387,5 +387,42 @@ def add_to_wishlist(request, pk):
 @login_required
 def wishlist(request):
     user_profile = UserProfile.objects.get(user=request.user)
-    wishlist = user_profile.wish_list.all()
-    return render(request, 'carrot_app/wishlist.html', {'wishlist': wishlist})
+    wishlist_posts = user_profile.wish_list.all()
+    return render(request, 'carrot_app/wishlist.html', {'wishlist_posts': wishlist_posts})
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, pk=post_id)
+    
+    # 사용자의 좋아요 상태 확인
+    is_liked_by_user = False
+    if request.user.is_authenticated:
+        is_liked_by_user = post.likes.filter(user=request.user).exists()
+
+    context = {
+        'post': post,
+        'is_liked_by_user': is_liked_by_user,  # is_liked_by_user 필드를 템플릿으로 전달
+    }
+    return render(request, 'your_template.html', context)
+
+def update_like_state(request, post_id, new_like_state):
+    post = get_object_or_404(Post, pk=post_id)
+
+    # 현재 로그인한 사용자의 User 인스턴스 가져오기
+    user = request.user
+    
+    # 사용자의 관심 목록에서 해당 상품을 찾아냄
+    wishlist_items = WishList.objects.filter(user=user, product=post)
+    
+    # 좋아요 상태를 업데이트
+    if new_like_state == 'true':
+        # 이미 관심 목록에 있는 경우, 아무 작업을 하지 않음
+        pass
+    else:
+        # 관심 목록에서 항목을 제거
+        wishlist_items.delete()
+
+    # 좋아요 상태를 DB에 업데이트
+    post.is_liked_by_user = new_like_state == 'true'
+    post.save()
+
+    return JsonResponse({"message": "좋아요 상태가 업데이트되었습니다."})

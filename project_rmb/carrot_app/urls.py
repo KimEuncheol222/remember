@@ -24,6 +24,7 @@ urlpatterns = [
     path('chat/', views.chat, name='chat'),
     path('add_to_wishlist/<int:pk>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('wishlist/', views.wishlist, name='wishlist'),
+    path('update-like-state/<int:post_id>/<str:new_like_state>/', views.update_like_state, name='update-like-state'),
 
     # 채팅
     path("chat_index", views.index, name='index'),  
