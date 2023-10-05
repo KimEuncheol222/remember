@@ -27,7 +27,7 @@ h3{
     height: 380px;
     object-fit: contain;
     background-color: #dedede;
-    border-radius: 12px;
+    border-radius: 8px;
 }
 
 .info-button-box{
@@ -81,13 +81,19 @@ hr{
     margin: 16px 0 0 0;
     gap: 16px;
 }
- 
+
 .location-views-box{
     opacity: 0.5;
     margin-top: 40px;
 }
 
 /* 채팅선택창 */
+.chatroom-link{
+    width: -webkit-fill-available;
+    text-decoration: none;
+    color: #000;
+}
+
 .chat-select-container{
     width: 30%;
     background-color: #fff;
@@ -109,7 +115,9 @@ hr{
 }
 
 .chat-list-box{
-    width: 100%;    
+    width: 100%;
+    overflow-y: scroll;
+    height: 92%;
 }
 
 .chat-box{
@@ -196,14 +204,19 @@ hr{
 /* 채팅창 메인 */
 .chat-container{
     padding: 14px 20px;
-    max-height: 500px;
-    overflow-y: auto; 
+    max-height: 264px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 .message-box{
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 6px;
 }
 
 .message-text{

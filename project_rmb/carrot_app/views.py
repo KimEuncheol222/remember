@@ -92,8 +92,12 @@ def trade_post(request, pk):
 
 
 # alert용 화면
-def alert(request, alert_message):
-    return render(request, 'carrot_app/alert.html', {'alert_message': alert_message})
+def alert(request, alert_message, redirect_url='location'):
+    context = {
+        'alert_message': alert_message,
+        'redirect_url': redirect_url
+    }
+    return render(request, 'carrot_app/alert.html', context)
 
 @login_required
 def write(request):
@@ -124,16 +128,26 @@ def edit(request, id):
     return render(request, 'carrot_app/write.html', {'post': post})
 
 
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user == post.user:
+        post.delete()
+        return redirect('carrot_app:trade')
+    else:
+        return HttpResponse("You are not authorized to delete this post.", status=403)
+
 # 포스트 업로드
 @login_required
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(commit=False)  # 임시 저장
-            post.user = request.user  # 작성자 정보 추가 (이 부분을 수정했습니다)
-            post.save()  # 최종 저장
-            return redirect('carrot_app:trade_post', pk=post.pk)  # 저장 후 상세 페이지로 이동
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('carrot_app:trade_post', pk=post.pk)
     else:
         form = PostForm()
     return render(request, 'carrot_app/trade_post.html', {'form': form})
@@ -268,8 +282,10 @@ def create_or_join_chat(request, pk):
         chat_room = ChatRoom(starter=user, receiver=post.user, post=post)
         chat_room.save()
         created = True
-
-    return JsonResponse({'success': True, 'chat_room_id': chat_room.pk, 'created': created})
+        post.chat_num += 1
+    
+    # 새로운 채팅방을 만든 후 해당 채팅방으로 리디렉션
+    return redirect('carrot_app:chat_room', pk=chat_room.pk)
 
 
 # 가장 최근 채팅방 가져오기
@@ -282,7 +298,8 @@ def get_latest_chat(request, pk):
             Q(post_id=pk) &
             (Q(receiver=user) | Q(starter=user))
         ).latest('latest_message_time')
-        return JsonResponse({'success': True, 'chat_room_id': latest_chat_with_pk.room_number})
+        return redirect('carrot_app:chat_room', pk=latest_chat_with_pk.room_number)
+    
     except ChatRoom.DoesNotExist:
         pass
 
@@ -291,16 +308,17 @@ def get_latest_chat(request, pk):
         latest_chat = ChatRoom.objects.filter(
             Q(receiver=user) | Q(starter=user)
         ).latest('latest_message_time')
-        return JsonResponse({'success': True, 'chat_room_id': latest_chat.room_number})
+        return redirect('carrot_app:chat_room', pk=latest_chat.room_number)
 
     # 3) 모두 없다면 현재 페이지로 리디렉션
     except ChatRoom.DoesNotExist:
         return JsonResponse({
             'success': False, 
-            'alert_message': '진행중인 채팅이 없습니다.'
+            'alert_message': '진행중인 채팅이 없습니다.',
+            'redirect_url': 'main'
         })
 
-        
+
 # nav/footer에서 채팅하기 눌렀을 때
 @login_required
 def get_latest_chat_no_pk(request):
@@ -313,7 +331,12 @@ def get_latest_chat_no_pk(request):
         return redirect('carrot_app:chat_room', pk=latest_chat.room_number)
 
     except ChatRoom.DoesNotExist:
-        return redirect('carrot_app:alert', alert_message='진행중인 채팅이 없습니다.', redirect_url='main')
+        return JsonResponse({
+            'success': False, 
+            'alert_message': 'There is no ChatRoom.',
+            'redirect_url': 'main'
+        })
+        # return redirect('carrot_app:alert', alert_message='진행중인 채팅이 없습니다.', redirect_url='main')
     
 @method_decorator(login_required, name='dispatch')
 class ConfirmDealView(View):
@@ -337,9 +360,9 @@ class ConfirmDealView(View):
             messages.error(request, 'Chat room does not exist.')
             return redirect('carrot_app:trade')
         
-        # buyer를 설정하고, product_sold를 Y로 설정
+        # buyer를 설정하고, status를 판매완료로 설정
         post.buyer = chat_room.receiver if chat_room.starter == post.user else chat_room.starter
-        post.product_sold = 'Y'
+        post.status = '판매완료'
         post.save()
         
         # 거래가 확정되면 새로고침
