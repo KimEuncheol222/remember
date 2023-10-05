@@ -283,6 +283,7 @@ def create_or_join_chat(request, pk):
         chat_room.save()
         created = True
         post.chat_num += 1
+        post.save()
     
     # 새로운 채팅방을 만든 후 해당 채팅방으로 리디렉션
     return redirect('carrot_app:chat_room', pk=chat_room.pk)

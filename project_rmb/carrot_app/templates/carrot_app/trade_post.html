@@ -22,10 +22,10 @@
             <div class="post-box" data-post-id="{{ post.id }}">
                 {% block content %}
                 {% if post.images %}
-                <img src="{{ post.images.url }}" alt="{{ post.title }}" class="block-box">
-            {% else %}
-                <img src="{% static 'img/dangun.png' %}" alt="Default Image" class="block-box">
-            {% endif %}
+                    <img src="{{ post.images.url }}" alt="{{ post.title }}" class="block-box">
+                {% else %}
+                    <img src="{% static 'img/dangun.png' %}" alt="Default Image" class="block-box">
+                {% endif %}
             <div class="flex-box between info-button-box">
               <div class="user-info">
                 <h6>{{ post.user }}</h6>
