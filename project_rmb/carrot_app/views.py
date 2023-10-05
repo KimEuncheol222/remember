@@ -331,12 +331,12 @@ def get_latest_chat_no_pk(request):
         return redirect('carrot_app:chat_room', pk=latest_chat.room_number)
 
     except ChatRoom.DoesNotExist:
-        return JsonResponse({
-            'success': False, 
-            'alert_message': 'There is no ChatRoom.',
-            'redirect_url': 'main'
-        })
-        # return redirect('carrot_app:alert', alert_message='진행중인 채팅이 없습니다.', redirect_url='main')
+        # return JsonResponse({
+        #     'success': False, 
+        #     'alert_message': 'There is no ChatRoom.',
+        #     'redirect_url': 'main'
+        # })
+        return redirect('carrot_app:alert', alert_message='진행중인 채팅이 없습니다.', redirect_url='main')
     
 @method_decorator(login_required, name='dispatch')
 class ConfirmDealView(View):

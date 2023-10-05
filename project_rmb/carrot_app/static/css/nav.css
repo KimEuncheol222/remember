@@ -106,6 +106,12 @@ input {
         display: none;
     }
 
+    a {
+        list-style: none;
+        text-decoration: none;
+        color: #000;
+    }
+
     .logo {
         display: flex;
         margin-left: 18px;

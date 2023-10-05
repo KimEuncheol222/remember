@@ -21,6 +21,7 @@
         <div class="container column center">
           <div class="full-box trade-box column">
             <div class="flex-box full-box card-container between">
+              {% if posts %}
               {% for post in posts %}
 
                 <div class="card-box">
@@ -45,9 +46,11 @@
                   </a>
                 </div>
               {% endfor %}
-
             </div>
           </div>
+          {% else %}
+          <div class="no-results">검색결과가 없습니다.</div>
+          {% endif %}
         </div>
       </div>
       {% include 'carrot_app/footer.html' %}
