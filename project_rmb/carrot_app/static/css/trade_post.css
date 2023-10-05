@@ -86,3 +86,23 @@ hr{
     opacity: 0.5;
     margin-top: 40px;
 }
+
+.delete-button-box {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+}
+
+.delete-button-box button {
+    background-color: #ff3d3d;
+    color: #fff;
+    font-weight: 700;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.delete-button-box button:hover {
+    opacity: 0.8;
+}

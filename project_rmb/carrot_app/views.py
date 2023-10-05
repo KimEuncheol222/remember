@@ -128,16 +128,26 @@ def edit(request, id):
     return render(request, 'carrot_app/write.html', {'post': post})
 
 
+@login_required
+def delete_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.user == post.user:
+        post.delete()
+        return redirect('carrot_app:trade')
+    else:
+        return HttpResponse("You are not authorized to delete this post.", status=403)
+
 # 포스트 업로드
 @login_required
 def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            post = form.save(commit=False)  # 임시 저장
-            post.user = request.user  # 작성자 정보 추가 (이 부분을 수정했습니다)
-            post.save()  # 최종 저장
-            return redirect('carrot_app:trade_post', pk=post.pk)  # 저장 후 상세 페이지로 이동
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('carrot_app:trade_post', pk=post.pk)
     else:
         form = PostForm()
     return render(request, 'carrot_app/trade_post.html', {'form': form})

@@ -17,6 +17,7 @@ urlpatterns = [
     path('trade_post/<int:pk>/', views.trade_post, name='trade_post'),
     path('write/', views.write, name='write'),
     path('edit/<int:id>/', views.edit, name='edit'),
+    path('delete_post/<int:pk>/', views.delete_post, name='delete_post'),
     path('create_form/', views.create_post, name='create_form'),
     path('location/', views.location, name='location'),
     path('search/', views.search, name='search'),
