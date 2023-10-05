@@ -70,7 +70,11 @@
               <div class="goods-box flex-box between">
                 <div class="flex-box">
                   <div class="selected-thumbnail-box">
-                    <img src="{{ post.images.url }}" alt="">
+                    {% if post.images %}
+                      <img src="{{ post.images.url }}" alt="{{ post.title }}">
+                    {% else %}
+                      <img src="{% static 'img/bbang2.png' %}" alt="{{ post.title }}">
+                    {% endif %}
                   </div>
                   <div class="goods-info-box">
                     <p>{{ post.title }}</p>

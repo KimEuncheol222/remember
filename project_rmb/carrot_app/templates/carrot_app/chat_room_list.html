@@ -1,5 +1,5 @@
 <!-- chat/templates/chat/chat_room_list.html -->
-{% load humanize %}
+{% load static%}{% load humanize %}
 <!-- chat/templates/chat/chat_room_list.html -->
 {% for chat_room_data in chat_room_data %}
   <a href="{% url 'carrot_app:chat_room' chat_room_data.chat_room.room_number %}" class="chatroom-link">
@@ -26,6 +26,8 @@
       <div class="thumbnail-box">
         {% if chat_room_data.chat_room.post.images %}
           <img src="{{ chat_room_data.chat_room.post.images.url }}" alt="Post Thumbnail">
+        {% else %}
+          <img src="{% static 'img/bbang2.png' %}" alt="Post Basic Thumbnail"> 
         {% endif %}
       </div>
 
