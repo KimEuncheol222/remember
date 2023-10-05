@@ -77,3 +77,17 @@ document.addEventListener("DOMContentLoaded", function () {
         logoutLink.style.display = "none";
     }
 });
+
+// li 영역클릭으로 a의 기능 작동
+
+document.addEventListener("DOMContentLoaded", function () {
+    let recommendList = document.getElementById("recommendList");
+
+    recommendList.addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+            let searchText = event.target.textContent;
+
+            window.location.href = "/search/?search=" + searchText;
+        }
+    });
+});
