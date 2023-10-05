@@ -5,7 +5,7 @@ from . import views
 app_name = 'carrot_app'
 
 urlpatterns = [
-    path('alert/<str:alert_message>/', views.alert, name='alert'),
+    path('alert/<str:alert_message>/<str:redirect_url>/', views.alert, name='alert'),
 
     path('', views.main, name='main'),
     path('login/', views.login, name='login'),
