@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("trade-button").classList.toggle("orange-text");
     } else if (window.location.pathname == "/location/") {
         document.getElementById("location-button").classList.toggle("orange-text");
+    } else if (window.location.pathname == "/wishlist/") { // 관심목록 페이지 URL 추가
+        document.getElementById("wishlist-button").classList.toggle("orange-text");
     }
 });
 
