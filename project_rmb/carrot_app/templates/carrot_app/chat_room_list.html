@@ -6,7 +6,7 @@
     <div class="flex-box chat-box between">
 
       <div class="flex-box column" style="place-items: flex-start;">
-        <div class="flex-box">
+        <div class="flex-box" style="margin-bottom: 8px;">
           <p class="bold">
             {% if chat_room_data.chat_room.starter.username != request.user.username %}
               {{ chat_room_data.chat_room.starter.username }}
