@@ -8,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from .forms import PostForm
 
-from .models import UserProfile, Post, StandardArea, ChatRoom, Message
+from .models import UserProfile, Post, StandardArea, ChatRoom, Message, WishList
 
 # Create your views here.
 def login(request):
@@ -367,3 +367,25 @@ class ConfirmDealView(View):
         
         # 거래가 확정되면 새로고침
         return redirect('carrot_app:chat_room', pk=chat_room.room_number)
+
+@login_required
+def add_to_wishlist(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    user_profile = UserProfile.objects.get(user=request.user)
+    
+    # 이미 관심 목록에 있는지 확인
+    if user_profile.wish_list.filter(product=post).exists():
+        # 이미 있는 경우 제거
+        user_profile.wish_list.remove(post)
+    else:
+        # 없는 경우 추가
+        wish_item = WishList(user=request.user, product=post)
+        wish_item.save()
+
+    return redirect('carrot_app:wishlist')
+
+@login_required
+def wishlist(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+    wishlist = user_profile.wish_list.all()
+    return render(request, 'carrot_app/wishlist.html', {'wishlist': wishlist})

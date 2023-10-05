@@ -54,6 +54,14 @@ class StandardArea(models.Model):
     city_name = models.CharField(max_length=100)
     version = models.DateTimeField(auto_now_add=True)
 
+# 관심 상품
+class WishList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wish_list')
+    product = models.ForeignKey(Post, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} - {self.product.title}'
 
 # 사용자 프로필
 class UserProfile(models.Model):
@@ -62,19 +70,13 @@ class UserProfile(models.Model):
     region_certification = models.CharField(max_length=1, default='N')
     certificated_at = models.DateTimeField(auto_now_add=True, null=True)
     rating_score = models.DecimalField(max_digits=3, decimal_places=1, default=36.5, null=True)
+    wish_list = models.ManyToManyField(WishList, blank=True)
 
     def join_date(self):
         return self.user.date_joined
 
     def __str__(self):
         return f'{self.user.username} Profile'
-
-# 관심 상품
-class WishList(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wish_list')
-    product_id = models.ForeignKey(Post, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
-
 
 # 채팅
 class ChatRoom(models.Model):

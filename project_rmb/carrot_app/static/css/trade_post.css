@@ -105,3 +105,27 @@ hr{
 .delete-button-box button:hover {
     opacity: 0.8;
 }
+
+.like-button {
+    display: inline-block;
+    vertical-align: middle; /* 조회수와 수직 정렬 */
+    margin-right: 10px; /* 아이콘과 조회수 사이의 간격 조절 */
+    cursor: pointer; /* 포인터 형태로 마우스 커서 변경 */
+    transition: fill 0.2s; /* 색상 변경에 애니메이션 효과 추가 */
+}
+
+.like-button svg {
+    fill: gray; /* 아이콘 색상 설정 */
+    width: 1.5em; /* 아이콘 크기 설정 */
+}
+
+.like-button.liked svg {
+    fill: orange; /* 클릭 시 아이콘 색상 변경 */
+}
+
+/* 버튼에 호버 효과 추가 */
+.like-button:hover {
+    opacity: 0.8;
+}
+
+

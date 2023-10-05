@@ -1,0 +1,36 @@
+{% load custom_filter%}
+{% load static %}{% load humanize %}
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>관심목록</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/global.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/trade.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nav.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}"/>
+  </head>
+
+  <body>
+    {% include 'carrot_app/nav.html' %}
+    {% block content %}
+    <h1>나의 관심 목록</h1>
+    {% if wishlist %}
+      <ul>
+        {% for item in wishlist %}
+          <li>
+            <a href="{% url 'carrot_app:trade_post' item.product.pk %}">{{ item.product.title }}</a>
+            <a href="{% url 'carrot_app:add_to_wishlist' item.product.pk %}" class="remove-from-wishlist">좋아요 취소</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>관심 목록이 비어 있습니다.</p>
+    {% endif %}
+  {% endblock %}
+  {% include 'carrot_app/footer.html' %}
+
+</body>
+<script src="{% static 'js/trade.js' %}"></script>
+</html>

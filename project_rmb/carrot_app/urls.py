@@ -22,6 +22,8 @@ urlpatterns = [
     path('location/', views.location, name='location'),
     path('search/', views.search, name='search'),
     path('chat/', views.chat, name='chat'),
+    path('add_to_wishlist/<int:pk>/', views.add_to_wishlist, name='add_to_wishlist'),
+    path('wishlist/', views.wishlist, name='wishlist'),
 
     # 채팅
     path("chat_index", views.index, name='index'),  
