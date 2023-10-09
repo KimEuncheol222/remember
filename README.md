@@ -106,6 +106,15 @@
 3) pip install channels==3.0.4<br>
 4) pip install daphne==4.0.0<br>
 5) pip install -r requirements.txt<br>
+6) .env 생성, 해당 키값 발급 후 입력 = [
+SECRET_KEY=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+OPENAI_API_KEY=
+]
 ```
 
 <h4>MAC</h4>
@@ -116,6 +125,15 @@
 3) pip3 install channels==3.0.4<br>
 4) pip3 install daphne==4.0.0<br>
 5) pip3 install -r requirements.txt
+6) .env 생성, 해당 키값 발급 후 입력 = [
+SECRET_KEY=
+DB_NAME=
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_PORT=
+OPENAI_API_KEY=
+]
 ```
 
 <br>
