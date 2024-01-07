@@ -1,4 +1,4 @@
-<h1>[Estsoft 오르미 2기] Remember 당근마켓 Clone</h1>
+<h1>[Estsoft 오르미 2기] 채팅 기능이 있는 중고 거래 플랫폼</h1>
 
 ![표지](https://github.com/KimEuncheol222/remember/assets/125336999/f7074467-ae72-42a1-aa3b-98bad2520f5d)
 
