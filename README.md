@@ -2,9 +2,9 @@
 
 ![표지](https://github.com/KimEuncheol222/remember/assets/125336999/f7074467-ae72-42a1-aa3b-98bad2520f5d)
 
-<div align="center"">
-  본 프로젝트는 당근마켓을 모티브로 PC버전 클론 프로젝트이며,</br>
-  기본적인 반응형 Front와 당 프로젝트에 적용된 모든 Back-End를 구현했습니다.
+<div align="center">
+  본 프로젝트는 당근마켓을 모티브로 하는<br/>
+  채팅 기능이 있는 중고 거래 플랫폼 입니다.<br/>
 </div>
 
 <h2 tabindex="-1" id="user-content-목차" dir="auto"><a class="heading-link" href="#목차">목차</a></h2>
@@ -17,15 +17,15 @@
 6. [**협업 방식**](#6)
 7. [**역할 배분**](#7)
 
-<br>
+<br/>
 
 <div id="1"></div>
 <h2>📅 개발 기간</h2>
 2023.09.21 (목) ~ 2023.10.06 (금) 
 <br/> (주말 및 공휴일 제외 7일간 작업)
 
-<br>
-<br>
+<br/>
+<br/>
 
 <div id="2"></div>
 <h2>🛠 기술 스택</h2>
@@ -53,12 +53,13 @@
 <br>
 
 <div id="3"></div>
-<h2>:💻 서비스 화면</h2>
-<h4>Architecture</h4>
+<h2>💻 서비스 화면</h2>
+
+### Architecture
 
 ![image](https://github.com/KimEuncheol222/remember/assets/125336999/9ecbcc9a-a3ac-4656-a437-1070d2ed7fd3)
 
-#### 회원가입
+### 회원가입
 
 ![image](https://github.com/KimEuncheol222/remember/assets/125336999/73b4939f-b282-4174-b487-d997ae18b0c9)
 
@@ -141,10 +142,10 @@ OPENAI_API_KEY=
 
 
 <div id="5"></div>
-<h2>:👪 RE_MEMBER 소개</h2>
+<h2>👨‍👨‍👧‍👧 RE_MEMBER 소개</h2>
 <br>
 <br>
-<div align="center"">
+<div align="center">
   <table>
     <tr>
       <td align="center" width="150px">
@@ -197,7 +198,7 @@ OPENAI_API_KEY=
 <br>
 
 <div id="6"></div>
-<h2>:🧰 협업 방식</h2>
+<h2>🧰 협업 방식</h2>
 <br>
 
 ![image](https://github.com/KimEuncheol222/remember/assets/125336999/20e937d3-0b81-41f9-bcdb-b42c52b54ad9)
@@ -235,7 +236,7 @@ OPENAI_API_KEY=
 <br>
 
 <div id="7"></div>
-<h2>:🗂️ 역할 배분</h2>
+<h2>🗂️ 역할 배분</h2>
 <br>
 
 ![image](https://github.com/KimEuncheol222/remember/assets/125336999/d77b86ee-3230-4168-a6c6-7be18f253311)
